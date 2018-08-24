@@ -3,13 +3,14 @@ import React, { Component } from 'react';
 const google = window.google
 const center = { lat: 45.757950, lng: 21.228988 }
 const zoom = 17
+const zoomMarker = 18
 let info, bounds, oldInfo, oldMarker
 
 
 class MapContainer extends Component {
 
   componentDidMount() {
-    this.initMap
+    this.initMap()
   }
 
 
@@ -49,6 +50,7 @@ class MapContainer extends Component {
     marker.addListener("click", () => {
 
       map.setCenter(marker.position)
+      map.setZoom(zoomMarker)
 
       // setState to activeMarker in App
       this.props.onClickMarker(marker)
@@ -73,17 +75,23 @@ class MapContainer extends Component {
       info.setContent(`<h3>${props.title}</h3><p>Address: ${props.address}</p>`)
       info.open(map, marker);
 
-      // set default center, icon and close infowindow
-      info.addListener("closeclick",function(){
-        map.setCenter(center)
-        marker.setIcon(props.icon);
-        info.setMarker = null;
-      })
-
       oldInfo = info
       oldMarker = marker
 
     }); // end listener marker + info
+
+    // set default center, icon and close infowindow
+    info.addListener("closeclick", () => {
+      // reset setState to activeMarker in App for display in header
+      this.props.onCloseInfo()
+
+      map.setCenter(center)
+      map.setZoom(zoom)
+      marker.setIcon(props.icon)
+
+      info.setMarker = null;
+      // console.log("closeclick")
+    })
 
   }; // end addMarkers
 

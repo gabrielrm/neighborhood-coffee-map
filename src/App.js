@@ -133,6 +133,10 @@ class App extends Component {
     // console.log(this.state.activeMarker.length)
   }
 
+  onCloseInfo = () => {
+    // this.setState({ activeMarker: [] }, console.log("inActiveMarker"))
+    this.setState({ activeMarker: [] })
+  }
 
   handleSelectMarker = (location) => {
     // this.setState({ activeMarker: location })
@@ -151,6 +155,7 @@ class App extends Component {
         <MapContainer
           locations={this.state.locations}
           onClickMarker={this.onClickMarker}
+          onCloseInfo={this.onCloseInfo}
         />
       </div>
     );
