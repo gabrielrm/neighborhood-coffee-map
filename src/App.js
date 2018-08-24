@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import MapContainer from "./MapContainer"
+import Sidebar from "./Sidebar";
 
 class App extends Component {
 
@@ -152,6 +153,10 @@ class App extends Component {
             {this.state.activeMarker.title}
           </p>
         </div>
+        <Sidebar
+          locations={this.state.locations}
+          onSelectMarker={this.handleSelectMarker}
+        />
         <MapContainer
           locations={this.state.locations}
           onClickMarker={this.onClickMarker}
