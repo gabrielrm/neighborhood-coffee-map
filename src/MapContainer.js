@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios'
 
 const google = window.google
 const center = { lat: 45.757950, lng: 21.228988 }
@@ -10,7 +11,7 @@ let info, bounds, oldInfo, oldMarker
 class MapContainer extends Component {
 
   componentDidMount() {
-    this.initMap()
+    this.getVenues()
   }
 
 
@@ -29,20 +30,24 @@ class MapContainer extends Component {
 
   createMarkers = map => {
     // locations props from App
-    this.props.locations.map(marker => {
+    this.props.venues.map(marker => {
       return this.addMarkers(marker, map);
     });
   }
 
 
   addMarkers = (props, map) => {
+
+    const inactive = "https://maps.google.com/mapfiles/kml/pal2/icon62.png"
+    const active = "https://maps.google.com/mapfiles/kml/pal2/icon54.png"
+
     const marker = new google.maps.Marker({
-      position: props.latLng,
+      position: {lat: props.venue.location.lat, lng: props.venue.location.lng},
       map: map,
-      title: props.title,
-      icon: props.icon,
+      title: props.venue.name,
+      icon: inactive,
       animation: google.maps.Animation.DROP,
-      key: props.id,
+      key: props.venue.id,
     });
 
     bounds.extend(marker.position)
@@ -58,13 +63,12 @@ class MapContainer extends Component {
       // from: https://stackoverflow.com/questions/27754101/change-google-maps-marker-icon-when-clicking-on-other
       // check to see if oldMarker is set
       // if so, set the icon back to the default
-      oldMarker && oldMarker.setIcon(props.icon);
-      marker.setIcon(props.sIcon)
-
+      oldMarker && oldMarker.setIcon(inactive);
+      marker.setIcon(active)
       marker.setAnimation(google.maps.Animation.BOUNCE);
       setTimeout(()=> {
         marker.setAnimation(null)
-      }, 2000)
+      }, 600)
 
       // from: https://groups.google.com/forum/#!topic/google-maps-js-api-v3/cA2VRg4TO1k
       // autoclose infowindow when other marker is pressed
@@ -72,12 +76,16 @@ class MapContainer extends Component {
         oldInfo.close();
       }
 
-      info.setContent(`<h3>${props.title}</h3><p>Address: ${props.address}</p>`)
+      const infoContent = `<h3>${props.venue.name}</h3>` +
+        `<p>${props.venue.location.address}</p>` +
+        `<a href="https://foursquare.com/v/${props.venue.id} "` +
+        `target="_blank">Check it on Foursquare</a>`
+
+      info.setContent(infoContent)
       info.open(map, marker);
 
       oldInfo = info
       oldMarker = marker
-
     }); // end listener marker + info
 
     // set default center, icon and close infowindow
@@ -87,13 +95,43 @@ class MapContainer extends Component {
 
       map.setCenter(center)
       map.setZoom(zoom)
-      marker.setIcon(props.icon)
-
+      marker.setIcon(inactive)
       info.setMarker = null;
       // console.log("closeclick")
     })
-
   }; // end addMarkers
+
+
+  getVenues = () => {
+
+    const endPoint = "https://api.foursquare.com/v2/venues/explore?"
+    const parameters = {
+      radius: 200,
+      limit: 10,
+      query: "coffee",
+      ll: "45.757950,21.228988",
+      client_id: "KX5RWBG5XB3TB4YQIKH3KEBTHPO0RIOPLQ1JXDEHXU40K30B",
+      client_secret: "V3YUN1GQ0IGXQPXWXPTS2CA1AYXYSZVY1YJJITGUHTPYWKE2",
+      v: 20180818,
+    }
+
+    axios.get(endPoint + new URLSearchParams(parameters))
+      .then(response => {
+
+          const data = response.data.response.groups[0].items
+
+          // response from FS is loaded to App venues[]
+          this.props.pushVenues(data)
+
+          // initalize map
+          this.initMap()
+      })
+      .catch(error => {
+        // alert("Can't get data from Foursquare")
+        console.log(error)
+      })
+  } // end getVenues()
+
 
   render() {
     return (
