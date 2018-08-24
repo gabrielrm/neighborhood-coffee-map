@@ -51,7 +51,9 @@ class MapContainer extends Component {
     });
 
     // load markers to App markers[]
-    this.props.pushMarkers(marker)
+    const { markers } = this.props
+    markers.push(marker)
+    this.setState({ markers })
 
     bounds.extend(marker.position)
 

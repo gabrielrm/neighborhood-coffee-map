@@ -15,12 +15,12 @@ class Sidebar extends Component {
         </div>
         <div className="list">
           <ul>
-            {this.props.venues.map(location => (
+            {this.props.markers.filter(marker => marker.getVisible()).map((marker, id) => (
               <li
-                key={location.venue.id}
-                onClick={ () => this.props.onSelectMarker(location.venue.name) }
+                key={id}
+                onClick={ () => this.props.onSelectMarker(marker.title) }
               >
-                {location.venue.name}
+                {marker.title}
               </li>
             ))}
           </ul>

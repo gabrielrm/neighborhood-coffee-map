@@ -13,12 +13,6 @@ class App extends Component {
   }
 
 
-  // load markers from Map
-  getMarkers = (data) => {
-    // this.setState({ venues: data }, console.log("getVenues"))
-    this.setState({ markers: data })
-  }
-
   // load venues retrieved by Map (axios) from FS
   getVenues = (data) => {
     // this.setState({ venues: data }, console.log("getVenues"))
@@ -51,13 +45,18 @@ class App extends Component {
   render() {
 
     if (this.state.query) {
-      console.log(this.state.query)
-      this.state.venues.forEach((local, id) => {
-        if (local.venue.name.toLowerCase().includes(this.state.query.toLowerCase())) {
-        console.log(local.venue.name)
-        // this.state.markers[id].setVisible(true)
-        // document.querySelector(`div[title="${local.venue.name}"]`).click();
-          // console.log("FOUND")
+      this.state.venues.forEach((loc, id) => {
+        // console.log(loc)
+        if (loc.venue.name.toLowerCase().includes(this.state.query.toLowerCase())) {
+          this.state.markers[id].setVisible(true)
+        } else {
+          this.state.markers[id].setVisible(false)
+        }
+      })
+    } else {
+      this.state.venues.forEach((loc, id) => {
+        if (this.state.markers.length) {
+          this.state.markers[id].setVisible(true)
         }
       })
     }
@@ -77,11 +76,11 @@ class App extends Component {
           searchQuery={this.state.query}
         />
         <MapContainer
+          markers={this.state.markers}
           venues={this.state.venues}
           pushVenues={this.getVenues}
           onClickMarker={this.onClickMarker}
           onCloseInfo={this.onCloseInfo}
-          pushMarkers={this.getMarkers}
         />
       </div>
     );
