@@ -128,6 +128,12 @@ class App extends Component {
   }
 
 
+  onClickMarker = (marker) => {
+    this.setState({ activeMarker: marker })
+    // console.log(this.state.activeMarker.length)
+  }
+
+
   handleSelectMarker = (location) => {
     // this.setState({ activeMarker: location })
     console.log(location)
