@@ -50,6 +50,9 @@ class MapContainer extends Component {
       key: props.venue.id,
     });
 
+    // load markers to App markers[]
+    this.props.pushMarkers(marker)
+
     bounds.extend(marker.position)
 
     marker.addListener("click", () => {
@@ -96,8 +99,16 @@ class MapContainer extends Component {
       map.setCenter(center)
       map.setZoom(zoom)
       marker.setIcon(inactive)
-      info.setMarker = null;
-      // console.log("closeclick")
+      // info.setMarker = null;
+      info.close()
+    })
+
+    map.addListener("click", () => {
+      this.props.onCloseInfo()
+      info.close()
+      map.setCenter(center)
+      map.setZoom(zoom)
+      marker.setIcon(inactive)
     })
   }; // end addMarkers
 

@@ -5,6 +5,14 @@ class Sidebar extends Component {
   render() {
     return (
       <div className="sidebar">
+        <div className="search">
+          <input
+            type="text"
+            placeholder="Search.."
+            value={this.props.searchQuery}
+            onChange={(event) => this.props.updateQuery(event.target.value)}
+          />
+        </div>
         <div className="list">
           <ul>
             {this.props.venues.map(location => (
