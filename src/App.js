@@ -3,6 +3,12 @@ import './App.css';
 import MapContainer from "./MapContainer"
 import Sidebar from "./Sidebar";
 
+// https://developers.google.com/maps/documentation/javascript/events#auth-errors
+// Handle Google Maps error
+window.gm_authFailure = () => {
+  alert("Authentication failure, check your Google API key!");
+};
+
 class App extends Component {
 
   state = {
