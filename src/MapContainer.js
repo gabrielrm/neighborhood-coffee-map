@@ -98,10 +98,10 @@ class MapContainer extends Component {
         oldInfo.close();
       }
 
-      const infoContent = `<h3>${props.venue.name}</h3>` +
-        `<p>${props.venue.location.address}</p>` +
+      const infoContent = `<h3 tabindex=0>${props.venue.name}</h3>` +
+        `<p tabindex=0>${props.venue.location.address}</p>` +
         `<a href="https://foursquare.com/v/${props.venue.id} "` +
-        `target="_blank">Check it on Foursquare</a>`
+        `target="_blank" tabindex=0>Check it on Foursquare</a>`
 
       info.setContent(infoContent)
       info.open(map, marker);
@@ -157,7 +157,7 @@ class MapContainer extends Component {
           this.initMap()
       })
       .catch(error => {
-        // alert("Can't get data from Foursquare")
+        alert("Can't get data from Foursquare")
         console.log(error)
       })
   } // end getVenues()
