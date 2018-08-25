@@ -2,11 +2,19 @@ import React, { Component } from 'react';
 
 class Sidebar extends Component {
 
+  checkKey = (event, location) => {
+    if (event.charCode === 13) {
+      this.props.onSelectMarker(location);
+    }
+  };
+
   render() {
     return (
       <div className="sidebar">
         <div className="search">
           <input
+            role="search"
+            aria-label="search for coffee places"
             type="text"
             placeholder="Search.."
             value={this.props.searchQuery}
@@ -15,9 +23,14 @@ class Sidebar extends Component {
         </div>
         <div className="list">
           <ul>
-            {this.props.markers.filter(marker => marker.getVisible()).map((marker, id) => (
+            {this.props.markers.filter(marker => marker.visible).map((marker, id) => (
               <li
+                tabIndex="0"
+                role="button"
                 key={id}
+                onKeyPress={event => {
+                  this.checkKey(event, marker.title);
+                }}
                 onClick={ () => this.props.onSelectMarker(marker.title) }
               >
                 {marker.title}
