@@ -1,11 +1,26 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 
+let info, bounds, oldInfo, oldMarker
 const google = window.google
 const center = { lat: 45.757950, lng: 21.228988 }
 const zoom = 17
 const zoomMarker = 18
-let info, bounds, oldInfo, oldMarker
+const mapStyle = [
+  {
+    featureType: "administrative",
+    elementType: "labels",
+    stylers: [
+      { visibility: "off" }
+    ]
+  },{
+    featureType: "poi",
+    elementType: "labels",
+    stylers: [
+      { visibility: "off" }
+    ]
+  },
+]
 
 
 class MapContainer extends Component {
@@ -26,6 +41,8 @@ class MapContainer extends Component {
     bounds = new google.maps.LatLngBounds()
 
     this.createMarkers(map);
+
+    map.set("styles", mapStyle);
   }
 
   createMarkers = map => {
