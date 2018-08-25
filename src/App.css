@@ -1,55 +1,108 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/*------------------map-----------------*/
-
-#map {
+html, body {
   height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  position:relative;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+ul {
+  margin: 0;
+  padding: 5px;
+}
+
+li:hover {
+  color: orange;
+}
+
+li {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  text-align: left;
+  cursor: pointer;
+}
+
+.Main {
+  display: flex;
+  flex-direction: row;
+  background: #273746;
+}
+
+.Header {
+  height: 7vh;
+  display: flex;
+  justify-content: flex-start;
+  text-align: center;
+  background: #273746;
+  color: #fff;
+}
+
+.Title {
+  font-size: 0.8em;
+  width: 40vw;
+  padding-bottom: 0.2em
+}
+
+.Coffee {
+  font-size: 1.2em;
+  color: orange;
+}
+
+.Map {
+  height: 93vh;
   width: 70%;
-  display: inline-block;
   float: right
 }
 
-/* Optional: Makes the sample page fill the window. */
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
- }
-
-ul {
-  list-style: none;
+.Sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  height: 93vh;
+  text-align: left;
+  background: #273746;
 }
 
-.sidebar {
-  width: 30%;
-  height: 100%;
-  text-align: left;
-  display: inline-block;
+input {
+  width: 94%;
+  margin: 5px;
+}
+
+@media screen and (max-width: 720px) {
+
+  .Main {
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+  }
+  .Title {
+    font-size: 0.5em;
+    width: 50vw;
+  }
+  .Coffee {
+    font-size: 0.9em;
+    padding-top: 0.1em;
+  }
+  .Map {
+    width: 100vw;
+    height: 100vh;
+  }
+  .Sidebar {
+    height: 30vh;
+    width: 100vw;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+  }
+  li {
+    font-size: 0.8em;
+  }
 }

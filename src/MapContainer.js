@@ -165,7 +165,7 @@ class MapContainer extends Component {
 
   render() {
     return (
-      <div className="map" id="map"></div>
+      <div className="Map" id="map" role="application"></div>
     )
   }
 }

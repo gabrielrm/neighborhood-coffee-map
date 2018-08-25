@@ -69,25 +69,34 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div className="header" style={{height: 20}}>
-          <p>
-            {this.state.activeMarker.title}
-          </p>
+        <header className="Header" role="banner">
+          <div className="Title" role="heading" tabIndex="0">
+            <h1>
+              Neighborhood Coffee
+            </h1>
+          </div>
+          <div className="Coffee">
+            <p>
+              {this.state.activeMarker.title}
+            </p>
+          </div>
+        </header>
+        <div className="Main">
+          <Sidebar
+            venues={this.state.venues}
+            onSelectMarker={this.onSelectMarker}
+            markers={this.state.markers}
+            updateQuery={this.updateQuery}
+            searchQuery={this.state.query}
+          />
+          <MapContainer
+            markers={this.state.markers}
+            venues={this.state.venues}
+            pushVenues={this.getVenues}
+            onClickMarker={this.onClickMarker}
+            onCloseInfo={this.onCloseInfo}
+          />
         </div>
-        <Sidebar
-          venues={this.state.venues}
-          onSelectMarker={this.onSelectMarker}
-          markers={this.state.markers}
-          updateQuery={this.updateQuery}
-          searchQuery={this.state.query}
-        />
-        <MapContainer
-          markers={this.state.markers}
-          venues={this.state.venues}
-          pushVenues={this.getVenues}
-          onClickMarker={this.onClickMarker}
-          onCloseInfo={this.onCloseInfo}
-        />
       </div>
     );
   }

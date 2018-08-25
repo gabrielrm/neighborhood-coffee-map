@@ -10,7 +10,7 @@ class Sidebar extends Component {
 
   render() {
     return (
-      <div className="sidebar">
+      <div className="Sidebar">
         <div className="search">
           <input
             role="search"
