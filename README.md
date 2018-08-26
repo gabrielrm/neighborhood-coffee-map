@@ -1,6 +1,6 @@
 # Neighborhood Coffee map Project
 
-The project is part of Udacity's React Fundamentals course and is the final project of Udacity Front-End Nanodegree that display various locations from Timisoara, Romania, where is served coffee.
+The project is part of Udacity's React Fundamentals course and is the final project of Udacity Front-End Nanodegree that display various locations from Timisoara, Romania, where is served good coffee.
 
 ## Project Overview
 
@@ -35,7 +35,7 @@ The service worker is only implemented during production build mode!
 #### To run in production build mode and get a WORKING service worker
 
 - create production build with `npm run build`
-- install server run `npm install -g serve`
+- install server `npm install -g serve`
 - start server `serve -s build`
 - browse to `http://localhost:5000`
 
