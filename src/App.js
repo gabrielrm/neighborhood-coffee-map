@@ -19,19 +19,18 @@ class App extends Component {
   }
 
 
-  // load venues retrieved by Map (axios) from FS
+  // update venues retrieved by Map (axios) from FS
   getVenues = (data) => {
-    // this.setState({ venues: data }, console.log("getVenues"))
     this.setState({ venues: data })
   }
 
+  // update activeMarker on marker click
   onClickMarker = (marker) => {
     this.setState({ activeMarker: marker })
-    // console.log(this.state.activeMarker.length)
   }
 
+  // reset activeMarker
   onCloseInfo = () => {
-    // this.setState({ activeMarker: [] }, console.log("inActiveMarker"))
     this.setState({ activeMarker: [] })
   }
 
@@ -39,11 +38,12 @@ class App extends Component {
   onSelectMarker = (location) => {
 
     const venueName = location
-    // because apostrophe breaks syntax, put the text
+    // because apostrophe breaks syntax, I put the text
     // in a JavaScript var and insert it into JSX with the {} notation:
     document.querySelector(`div[title="${venueName}"]`).click();
   }
 
+  // update query based on input
   updateQuery = (query) => {
     this.setState({ query })
   }
@@ -52,7 +52,6 @@ class App extends Component {
 
     if (this.state.query) {
       this.state.venues.forEach((loc, id) => {
-        // console.log(loc)
         if (loc.venue.name.toLowerCase().includes(this.state.query.toLowerCase())) {
           this.state.markers[id].setVisible(true)
         } else {

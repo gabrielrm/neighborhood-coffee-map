@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 class Sidebar extends Component {
 
+  // check if Enter key is used to activate element
   checkKey = (event, location) => {
     if (event.charCode === 13) {
       this.props.onSelectMarker(location);

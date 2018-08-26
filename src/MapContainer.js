@@ -25,11 +25,12 @@ const mapStyle = [
 
 class MapContainer extends Component {
 
+  // fetch data from Foursquare
   componentDidMount() {
     this.getVenues()
   }
 
-
+  // initialize map
   initMap = () => {
 
     const map = new google.maps.Map(document.getElementById("map"), {
@@ -46,15 +47,14 @@ class MapContainer extends Component {
   }
 
   createMarkers = map => {
-    // locations props from App
     this.props.venues.map(marker => {
       return this.addMarkers(marker, map);
     });
   }
 
-
+  // add markers to map
   addMarkers = (props, map) => {
-
+    // use different icons for active/inactive marker
     const inactive = "https://maps.google.com/mapfiles/kml/pal2/icon62.png"
     const active = "https://maps.google.com/mapfiles/kml/pal2/icon54.png"
 
@@ -97,7 +97,7 @@ class MapContainer extends Component {
       if (typeof(oldInfo) !== "undefined") {
         oldInfo.close();
       }
-
+      // create content for infowindow
       const infoContent = `<h3 tabindex=0>${props.venue.name}</h3>` +
         `<p tabindex=0>${props.venue.location.address}</p>` +
         `<a href="https://foursquare.com/v/${props.venue.id} "` +
@@ -114,14 +114,14 @@ class MapContainer extends Component {
     info.addListener("closeclick", () => {
       // reset setState to activeMarker in App for display in header
       this.props.onCloseInfo()
-
       map.setCenter(center)
       map.setZoom(zoom)
       marker.setIcon(inactive)
-      // info.setMarker = null;
       info.close()
     })
 
+    // click on map close infowindow, change marker icon to inactive and
+    // reset map zoom an center to default
     map.addListener("click", () => {
       this.props.onCloseInfo()
       info.close()
@@ -131,7 +131,7 @@ class MapContainer extends Component {
     })
   }; // end addMarkers
 
-
+  // get data from Foursquare
   getVenues = () => {
 
     const endPoint = "https://api.foursquare.com/v2/venues/explore?"
@@ -153,7 +153,7 @@ class MapContainer extends Component {
           // response from FS is loaded to App venues[]
           this.props.pushVenues(data)
 
-          // initalize map
+          // after data retrive initalize map
           this.initMap()
       })
       .catch(error => {
