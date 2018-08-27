@@ -49,16 +49,21 @@ class App extends Component {
   }
 
   render() {
-
+    // if query got input
     if (this.state.query) {
+      // if is query transform to lowercase and check in venues for match
       this.state.venues.forEach((loc, id) => {
         if (loc.venue.name.toLowerCase().includes(this.state.query.toLowerCase())) {
+          // match found make corespondent markers visible
           this.state.markers[id].setVisible(true)
         } else {
+          // and others not visible
           this.state.markers[id].setVisible(false)
         }
       })
+    // if query input empty or deleted
     } else {
+      // make all markers visible
       this.state.venues.forEach((loc, id) => {
         if (this.state.markers.length) {
           this.state.markers[id].setVisible(true)

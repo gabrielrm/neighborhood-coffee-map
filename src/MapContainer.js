@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios'
 
 let info, bounds, oldInfo, oldMarker
-const google = window.google
 const center = { lat: 45.757950, lng: 21.228988 }
 const zoom = 17
 const zoomMarker = 18
@@ -33,19 +32,20 @@ class MapContainer extends Component {
   // initialize map
   initMap = () => {
 
-    const map = new google.maps.Map(document.getElementById("map"), {
+    const map = new window.google.maps.Map(document.getElementById("map"), {
       center: center,
       zoom: zoom,
     });
 
-    info = new google.maps.InfoWindow();
-    bounds = new google.maps.LatLngBounds()
+    info = new window.google.maps.InfoWindow();
+    bounds = new window.google.maps.LatLngBounds()
 
     this.createMarkers(map);
-
+    // add style to map
     map.set("styles", mapStyle);
   }
 
+  // creating markers
   createMarkers = map => {
     this.props.venues.map(marker => {
       return this.addMarkers(marker, map);
@@ -58,12 +58,12 @@ class MapContainer extends Component {
     const inactive = "https://maps.google.com/mapfiles/kml/pal2/icon62.png"
     const active = "https://maps.google.com/mapfiles/kml/pal2/icon54.png"
 
-    const marker = new google.maps.Marker({
+    const marker = new window.google.maps.Marker({
       position: {lat: props.venue.location.lat, lng: props.venue.location.lng},
       map: map,
       title: props.venue.name,
       icon: inactive,
-      animation: google.maps.Animation.DROP,
+      animation: window.google.maps.Animation.DROP,
       key: props.venue.id,
     });
 
@@ -87,7 +87,7 @@ class MapContainer extends Component {
       // if so, set the icon back to the default
       oldMarker && oldMarker.setIcon(inactive);
       marker.setIcon(active)
-      marker.setAnimation(google.maps.Animation.BOUNCE);
+      marker.setAnimation(window.google.maps.Animation.BOUNCE);
       setTimeout(()=> {
         marker.setAnimation(null)
       }, 600)
@@ -149,10 +149,8 @@ class MapContainer extends Component {
       .then(response => {
 
           const data = response.data.response.groups[0].items
-
           // response from FS is loaded to App venues[]
           this.props.pushVenues(data)
-
           // after data retrive initalize map
           this.initMap()
       })
